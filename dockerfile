@@ -1,8 +1,8 @@
 FROM debian:buster
 LABEL Marcos Viudes
 #WORKDIR /temp
-RUN apt-get -y update --no-install-recommends \
-    && apt-get -y upgrade \
+RUN apt-get -y update --no-install-recommends\
+    && apt-get -y upgrade\
     && apt-get -y install wget\
     && apt-get -y install apt-utils\
     && apt-get -y install nginx\

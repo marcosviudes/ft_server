@@ -17,4 +17,16 @@ ln -s /etc/nginx/sites-available/nginx-config.conf /etc/nginx/sites-enabled/defa
 service nginx start
 service mysql start
 service php7.3-fpm start
+
+#creating database
+echo "CREATE DATABASE MyDatabase" | mysql -u root
+echo "GRANT ALL PRIVILEGES ON MyDatabase.* TO 'root'@'localhost';" | mysql -u root
+echo "FLUSH PRIVILEGES;" | mysql -u root
+echo "UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user='root';" | mysql -u root
+mysql -u root
+# mysql wordpress -u root --password= < /tmp/wordpress.sql
+mysql -u root < /var/www/html/phpmyadmin/sql/create_tables.sql
+
+
+quit
 echo "=============Scritp ended=============="

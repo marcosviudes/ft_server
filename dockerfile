@@ -2,6 +2,7 @@ FROM debian:buster
 LABEL Marcos Viudes
 RUN apt-get -y update --no-install-recommends\
     && apt-get -y upgrade\
+    && apt-get -y install vim\
     && apt-get -y install wget\
     && apt-get -y install apt-utils\
     && apt-get -y install nginx\

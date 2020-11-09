@@ -1,6 +1,7 @@
 echo "installing phpmyadmin"
 wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip
-unzip phpMyAdmin-5.0.2-all-languages.zip
+mv hpMyAdmin-5.0.2-all-languages.zip
+unzip temp/phpMyAdmin-5.0.2-all-languages.zip
 mv phpMyAdmin-5.0.2-all-languages /var/www/html/phpmyadmin
 mv /temp/config.sample.inc.php /var/www/html/phpmyadmin
 rm /var/www/html/phpmyadmin/config.sample.inc.php && mv /temp/config.inc.php /var/www/html/phpmyadmin/

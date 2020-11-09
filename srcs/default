@@ -24,8 +24,8 @@ server {
 
 	# SSL configuration
 	#
-	# listen 443 ssl default_server;
-	# listen [::]:443 ssl default_server;
+	 listen 443 ssl default_server;
+	 listen [::]:443 ssl default_server;
 	#
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
@@ -45,10 +45,13 @@ server {
 
 	server_name localhost;
 
-	#location / {
+	ssl_certificate /etc/ssl/certs/localhost.crt;
+	ssl_certificate_key /etc/ssl/private/localhost.key;
+
+	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
-		#try_files $uri $uri/ =404;
+		try_files $uri $uri/ =404;
 	#}
 
 	# pass PHP scripts to FastCGI server
@@ -69,35 +72,6 @@ server {
 	#	deny all;
 	#}
 }
-
-server{
-	listen 443 ssl;
-	listen [::]:443 ssl;
-
-	ssl on;
-	ssl_certificate /etc/ssl/certs/localhost.crt;
-	ssl_certificate_key /etc/ssl/private/localhost.key;
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-
-	autoindex off;
-
-	root /var/www/html;
-
-	index index.html index.htm index.php;
-
-	server_name localhost www.localhost;
-
-
-	location / {
-		try_files $uri $uri/ = 404;
-	}
-
-	location ~ \.php$ {
-		include snippets/fastcgi-php.conf;
-		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
-	}
-
-}
 # Virtual Host configuration for example.com
 #
 # You can move that to a different file under sites-available/ and symlink that
@@ -115,4 +89,4 @@ server{
 #	location / {
 #		try_files $uri $uri/ =404;
 #	}
-#}
+}

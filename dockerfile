@@ -9,7 +9,8 @@ RUN apt-get -y update --no-install-recommends\
     && apt-get -y install mariadb-server\
     && apt-get -y install php-fpm php-mysql\
     php-gd php-xml php-pear php-gettext php-cgi\
-    && apt-get install -y unzip zip\
+    && apt-get -y install unzip zip\
+    && apt-get -y install openssl\
     && rm -rf /var/lib/apt/lists/*
 COPY srcs/ ./temp
 EXPOSE 80 443

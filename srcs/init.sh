@@ -2,8 +2,11 @@ echo "installing phpmyadmin"
 wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip
 unzip phpMyAdmin-5.0.2-all-languages.zip
 mv phpMyAdmin-5.0.2-all-languages /var/www/html/phpmyadmin
-mv temp/config.sample.inc.php /var/www/html/phpmyadmin
+mv /temp/config.sample.inc.php /var/www/html/phpmyadmin
+rm /var/www/html/phpmyadmin/config.sample.inc.php && mv /temp/config.inc.php /var/www/html/phpmyadmin/
+rm phpMyAdmin-5.0.2-all-languages.zip
 chmod -R 777 /var/www/html/phpmyadmin
+chmod -R 775 /var/www/html/phpmyadmin
 chown -R www-data:www-data /var/www/html/phpmyadmin
 echo "\033[1;32mphpmyadmin [OK]\033[0m"
 
@@ -22,6 +25,10 @@ mv /temp/default /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 nginx -t
 
+echo "Configure SSL"
+openssl genrsa -out /etc/ssl/private/nginx.key 4096
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=SP/ST=Spain/L=Madrid/O=42Madrid/CN=127.0.0.1" -keyout /etc/ssl/private/localhost.key -out /etc/ssl/certs/localhost.crt
+
 echo "Starting Services"
 service nginx start
 service mysql start
@@ -34,6 +41,9 @@ echo "GRANT ALL PRIVILEGES ON MyDatabase.* TO 'root'@'localhost';" | mysql -u ro
 echo "FLUSH PRIVILEGES;" | mysql -u root
 echo "UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user='root';" | mysql -u root
 echo "\033[1;32mDatabase Created\033[0m"
+mysql -u root MyDatabase < temp/MyDatabase.sql 
+
+
 #mysql -u root
 #quit
 # mysql wordpress -u root --password= < /tmp/wordpress.sql

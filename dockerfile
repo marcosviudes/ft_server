@@ -14,4 +14,4 @@ RUN apt-get -y update --no-install-recommends\
     && rm -rf /var/lib/apt/lists/*
 COPY srcs/ ./temp
 EXPOSE 80 443
-CMD /bin/bash
+ENTRYPOINT ["/bin/sh", "/temp/init.sh", "/bin/sh"]
